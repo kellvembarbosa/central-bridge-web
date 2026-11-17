@@ -1,0 +1,86 @@
+{
+  "forbidden_segments": [
+    "password",
+    "senha",
+    "hash",
+    "token",
+    "secret",
+    "segredo",
+    "document",
+    "documento",
+    "cpf",
+    "cnpj",
+    "remember",
+    "recovery"
+  ],
+  "cases": [
+    {
+      "name": "drops_secrets",
+      "input": {
+        "ref": "u1",
+        "email": "a@b.c",
+        "password": "x",
+        "password_hash": "y",
+        "apiToken": "z",
+        "nested": {
+          "cpf": "123",
+          "ok": 1
+        },
+        "list": [
+          {
+            "secret_key": "s",
+            "n": 2
+          }
+        ]
+      },
+      "allow": [],
+      "output": {
+        "ref": "u1",
+        "email": "a@b.c",
+        "nested": {
+          "ok": 1
+        },
+        "list": [
+          {
+            "n": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "allows_taker_document_only",
+      "input": {
+        "requested": true,
+        "taker": {
+          "document": "12345678000195",
+          "name": "ACME"
+        },
+        "document": "999"
+      },
+      "allow": [
+        "taker.document"
+      ],
+      "output": {
+        "requested": true,
+        "taker": {
+          "document": "12345678000195",
+          "name": "ACME"
+        }
+      }
+    },
+    {
+      "name": "camel_and_kebab",
+      "input": {
+        "rememberToken": "a",
+        "recovery-codes": "b",
+        "cnpjNumber": "c",
+        "documentType": "d",
+        "name": "ok"
+      },
+      "allow": [],
+      "output": {
+        "name": "ok"
+      }
+    }
+  ]
+}

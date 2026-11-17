@@ -1,0 +1,106 @@
+{
+  "token": "cbt_test_token_0123456789abcdef",
+  "max_skew_seconds": 300,
+  "cases": [
+    {
+      "name": "get_health",
+      "method": "GET",
+      "path": "/central-api/v1/health",
+      "timestamp": 1763200000,
+      "body": "",
+      "now": 1763200000,
+      "expect": "valid",
+      "signature": "e21109da7ee951ee1aa62723d6adce2219a37a91c6429d5ac62cc737c64512bb"
+    },
+    {
+      "name": "get_with_query",
+      "method": "GET",
+      "path": "/central-api/v1/users?q=ana%40x.com&page=2",
+      "timestamp": 1763200000,
+      "body": "",
+      "now": 1763200000,
+      "expect": "valid",
+      "signature": "7cd4e2cec424af0f7a8a1709adb7ed245df2be71ada2f5ff993b76dc6b409ce8"
+    },
+    {
+      "name": "post_with_body",
+      "method": "POST",
+      "path": "/central-api/v1/users/u_42/suspend",
+      "timestamp": 1763200000,
+      "body": "{\"reason\":\"Fraude confirmada\"}",
+      "now": 1763200000,
+      "expect": "valid",
+      "signature": "ac045d1b1d96fcd2ec4135910f3772c4e4e026cfbe7be41c9df84b2817392d04"
+    },
+    {
+      "name": "lowercase_method_same_signature",
+      "method": "post",
+      "path": "/central-api/v1/invoices",
+      "timestamp": 1763200000,
+      "body": "{\"a\":1}",
+      "now": 1763200000,
+      "expect": "valid",
+      "signature": "8bb764114a9e5d9be448b9a3a0d9ca83ce8949a8aeea5444be1e1463b49ed915"
+    },
+    {
+      "name": "skew_too_old",
+      "method": "GET",
+      "path": "/central-api/v1/health",
+      "timestamp": 1763199699,
+      "body": "",
+      "now": 1763200000,
+      "expect": "timestamp_skew",
+      "signature": "7489c7af22f910f944a8f1dac5c9274527e0ba091ae24d585bb116d2cc88d8fc"
+    },
+    {
+      "name": "skew_limit_ok",
+      "method": "GET",
+      "path": "/central-api/v1/health",
+      "timestamp": 1763199700,
+      "body": "",
+      "now": 1763200000,
+      "expect": "valid",
+      "signature": "ff1928d2a78974e5fb39272204755031cf8af484f4f2b994fe766147cc7f1084"
+    },
+    {
+      "name": "skew_future",
+      "method": "GET",
+      "path": "/central-api/v1/health",
+      "timestamp": 1763200301,
+      "body": "",
+      "now": 1763200000,
+      "expect": "timestamp_skew",
+      "signature": "28ef78f8173fc57d005fe78e7df5cf383457b1b2845333e8728b3cc3faba7eb5"
+    },
+    {
+      "name": "tampered_body",
+      "method": "POST",
+      "path": "/central-api/v1/users/u_42/suspend",
+      "timestamp": 1763200000,
+      "body": "{\"reason\":\"outro\"}",
+      "now": 1763200000,
+      "signature": "ac045d1b1d96fcd2ec4135910f3772c4e4e026cfbe7be41c9df84b2817392d04",
+      "expect": "signature_invalid"
+    },
+    {
+      "name": "wrong_token",
+      "method": "GET",
+      "path": "/central-api/v1/health",
+      "timestamp": 1763200000,
+      "body": "",
+      "now": 1763200000,
+      "signature": "7ed84f5b69d916f84de724e4ebb44e47d8fcfc16be3c2a40b07a9029a204a6d4",
+      "expect": "signature_invalid"
+    },
+    {
+      "name": "uppercase_hex_signature_accepted",
+      "method": "GET",
+      "path": "/central-api/v1/health",
+      "timestamp": 1763200000,
+      "body": "",
+      "now": 1763200000,
+      "signature": "E21109DA7EE951EE1AA62723D6ADCE2219A37A91C6429D5AC62CC737C64512BB",
+      "expect": "valid"
+    }
+  ]
+}
