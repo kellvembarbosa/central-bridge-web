@@ -20,6 +20,8 @@ const vectors = readVectors<{
   event_parsed: unknown
   renewal_wire: Record<string, unknown>
   renewal_parsed: unknown
+  prepaid_wire: Record<string, unknown>
+  prepaid_parsed: unknown
   invalid_events: { why: string; wire: Record<string, unknown> }[]
 }>('payment_event.json')
 
@@ -29,6 +31,13 @@ describe('checkout vectors (bridge-test-vectors/payment_event.json)', () => {
     assert.deepEqual(parsePaymentRecord(vectors.payment_wire), vectors.payment_parsed)
     assert.deepEqual(parsePaymentEvent(vectors.event_wire), vectors.event_parsed)
     assert.deepEqual(parsePaymentEvent(vectors.renewal_wire), vectors.renewal_parsed)
+    assert.deepEqual(parsePaymentEvent(vectors.prepaid_wire), vectors.prepaid_parsed)
+  })
+
+  it('accessUntil: null when an older Central omits it, 422 when it is not a string', () => {
+    const { access_until: _omitted, ...older } = vectors.payment_wire as Record<string, unknown>
+    assert.equal(parsePaymentRecord(older).accessUntil, null)
+    assert.throws(() => parsePaymentRecord({ ...older, access_until: 123 }), ValidationFailedError)
   })
 
   for (const bad of vectors.invalid_events) {

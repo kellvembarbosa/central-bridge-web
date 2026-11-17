@@ -60,6 +60,7 @@
     "tracking": {
       "utm_source": "google"
     },
+    "access_until": null,
     "created_at": "2026-11-17T12:00:00.000+00:00",
     "paid_at": null,
     "refunded_at": null,
@@ -93,6 +94,7 @@
     "tracking": {
       "utm_source": "google"
     },
+    "accessUntil": null,
     "createdAt": "2026-11-17T12:00:00.000+00:00",
     "paidAt": null,
     "refundedAt": null,
@@ -126,6 +128,7 @@
       "tracking": {
         "utm_source": "google"
       },
+      "access_until": null,
       "created_at": "2026-11-17T12:00:00.000+00:00",
       "paid_at": "2026-11-17T12:01:00.000+00:00",
       "refunded_at": null,
@@ -161,6 +164,7 @@
       "tracking": {
         "utm_source": "google"
       },
+      "accessUntil": null,
       "createdAt": "2026-11-17T12:00:00.000+00:00",
       "paidAt": "2026-11-17T12:01:00.000+00:00",
       "refundedAt": null,
@@ -196,6 +200,7 @@
       "tracking": {
         "utm_source": "google"
       },
+      "access_until": "2027-01-17T12:00:00.000+00:00",
       "created_at": "2026-11-17T12:00:00.000+00:00",
       "paid_at": "2026-11-17T12:01:00.000+00:00",
       "refunded_at": null,
@@ -234,6 +239,7 @@
       "tracking": {
         "utm_source": "google"
       },
+      "accessUntil": "2027-01-17T12:00:00.000+00:00",
       "createdAt": "2026-11-17T12:00:00.000+00:00",
       "paidAt": "2026-11-17T12:01:00.000+00:00",
       "refundedAt": null,
@@ -242,6 +248,84 @@
     "subscription": {
       "status": "active",
       "currentPeriodEnd": "2027-01-17T12:00:00.000+00:00"
+    }
+  },
+  "prepaid_wire": {
+    "id": "evt_00112233445566778899aabbccddeeff",
+    "type": "payment.paid",
+    "occurred_at": "2026-11-17T12:01:05.000+00:00",
+    "payment": {
+      "id": "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+      "status": "paid",
+      "plan": {
+        "slug": "30-dias",
+        "name": "30 dias",
+        "interval": "day",
+        "interval_count": 30,
+        "recurring": false
+      },
+      "amount_cents": 1090,
+      "refunded_cents": 0,
+      "currency": "BRL",
+      "method": "pix",
+      "product_user_ref": "42",
+      "customer": {
+        "name": "Ana Souza",
+        "email": "ana@cliente.test"
+      },
+      "pix": null,
+      "checkout_url": null,
+      "tracking": {
+        "utm_source": "google"
+      },
+      "access_until": "2026-12-17T12:01:00.000+00:00",
+      "created_at": "2026-11-17T12:00:00.000+00:00",
+      "paid_at": "2026-11-17T12:01:00.000+00:00",
+      "refunded_at": null,
+      "expires_at": "2026-11-18T12:00:00.000+00:00"
+    },
+    "subscription": {
+      "status": "active",
+      "current_period_end": "2026-12-17T12:01:00.000+00:00"
+    }
+  },
+  "prepaid_parsed": {
+    "id": "evt_00112233445566778899aabbccddeeff",
+    "type": "payment.paid",
+    "occurredAt": "2026-11-17T12:01:05.000+00:00",
+    "payment": {
+      "id": "1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+      "status": "paid",
+      "plan": {
+        "slug": "30-dias",
+        "name": "30 dias",
+        "interval": "day",
+        "intervalCount": 30,
+        "recurring": false
+      },
+      "amountCents": 1090,
+      "refundedCents": 0,
+      "currency": "BRL",
+      "method": "pix",
+      "productUserRef": "42",
+      "customer": {
+        "name": "Ana Souza",
+        "email": "ana@cliente.test"
+      },
+      "pix": null,
+      "checkoutUrl": null,
+      "tracking": {
+        "utm_source": "google"
+      },
+      "accessUntil": "2026-12-17T12:01:00.000+00:00",
+      "createdAt": "2026-11-17T12:00:00.000+00:00",
+      "paidAt": "2026-11-17T12:01:00.000+00:00",
+      "refundedAt": null,
+      "expiresAt": "2026-11-18T12:00:00.000+00:00"
+    },
+    "subscription": {
+      "status": "active",
+      "currentPeriodEnd": "2026-12-17T12:01:00.000+00:00"
     }
   },
   "invalid_events": [
@@ -275,6 +359,7 @@
           "tracking": {
             "utm_source": "google"
           },
+          "access_until": null,
           "created_at": "2026-11-17T12:00:00.000+00:00",
           "paid_at": "2026-11-17T12:01:00.000+00:00",
           "refunded_at": null,
@@ -321,6 +406,7 @@
           "tracking": {
             "utm_source": "google"
           },
+          "access_until": null,
           "created_at": "2026-11-17T12:00:00.000+00:00",
           "paid_at": "2026-11-17T12:01:00.000+00:00",
           "refunded_at": null,

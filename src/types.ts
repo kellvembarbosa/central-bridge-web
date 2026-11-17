@@ -137,10 +137,13 @@ export interface BridgeHandlers {
   /** Must be idempotent by `delivery.invoiceId`. */
   receiveInvoice?(delivery: InvoiceDelivery, actor: string): MaybePromise<void>
   /**
-   * Payment notification of the Central checkout (§10): grant on
-   * `payment.paid`, revoke on `payment.refunded`, extend on
-   * `subscription.renewed`… Must be idempotent by `event.id` (and grant once
-   * per `event.payment.id`). Throwing makes the Central retry later.
+   * Payment notification of the Central checkout (§10): on `payment.paid`
+   * and `subscription.renewed` set the access of `payment.productUserRef` to
+   * `payment.plan.slug` until `payment.accessUntil` (null = forever); revoke
+   * on `payment.refunded`; `subscription.ended` only means the gateway will
+   * not charge again (access still runs until `accessUntil`). Must be
+   * idempotent by `event.id` (and grant once per `event.payment.id`).
+   * Throwing makes the Central retry later.
    */
   paymentEvent?(event: PaymentEvent, actor: string): MaybePromise<void>
 }

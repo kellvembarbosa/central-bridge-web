@@ -11,7 +11,7 @@ Same contract, vectors and handlers as `@central/bridge-adonis` and
 in the Central repository.
 
 ```bash
-npm install github:kellvembarbosa/central-bridge-web#v1.1.0
+npm install github:kellvembarbosa/central-bridge-web#v1.2.0
 ```
 
 (Source of truth: `packages/central-bridge-web` in the Central repository;
@@ -188,18 +188,24 @@ Then implement the `paymentEvent` handler — the Central calls
 ```ts
 paymentEvent: async (event) => {
   switch (event.type) {
-    case 'payment.paid': // grant event.payment.plan to event.payment.productUserRef
-      return grantOnce(event.payment.id, event.payment)
+    case 'payment.paid':
+    case 'subscription.renewed': // access to plan.slug until accessUntil (null = forever)
+      return setAccess(event.payment.productUserRef, event.payment.plan.slug, event.payment.accessUntil)
     case 'payment.refunded': // full refund or chargeback
-      return revoke(event.payment.id)
-    case 'subscription.renewed': // extend until event.subscription.currentPeriodEnd
-      return extend(event.payment.id, event.subscription!.currentPeriodEnd)
-    case 'subscription.ended':
-    case 'payment.expired':
-      return markEnded(event.payment.id, event.type)
+      return revoke(event.payment.productUserRef, event.payment.id)
+    case 'subscription.ended': // the gateway will not charge again; access runs until accessUntil
+    case 'payment.expired': // the pending charge expired unpaid
+      return
   }
 }
 ```
+
+`payment.accessUntil` is until when the payment (and its renewals) grants
+access; `null` means lifetime (or not paid yet). The Central computes it — the
+product never does date math. `event.subscription` (`{ status,
+currentPeriodEnd }`) comes with every paid plan that has a period (recurring
+or one-off prepaid) and is `null` only for lifetime plans and never-paid
+charges; `subscription.currentPeriodEnd` equals `payment.accessUntil`.
 
 Handle it **idempotently by `event.id`** and grant at most once per
 `payment.id`: the same notification may arrive more than once, and the

@@ -53,6 +53,11 @@ export interface PaymentRecord {
   /** Hosted payment page (card/boleto/Pix), only while pending. */
   checkoutUrl: string | null
   tracking: Record<string, string>
+  /**
+   * Until when this payment (and its renewals) grants access; null = lifetime
+   * or not paid yet. The Central computes it: the product never does date math.
+   */
+  accessUntil: string | null
   createdAt: string
   paidAt: string | null
   refundedAt: string | null
@@ -73,11 +78,19 @@ export type PaymentEventType = (typeof PAYMENT_EVENT_TYPES)[number]
  * What the Central sends to `POST payment-events`. Must be handled
  * idempotently by `id` (it may arrive more than once):
  *
- * - `payment.paid`: grant access for `payment.plan` (once per `payment.id`).
+ * - `payment.paid`: set the access of `payment.productUserRef` to
+ *   `payment.plan.slug` until `payment.accessUntil` (null = forever), once
+ *   per `payment.id`.
  * - `payment.refunded`: full refund or chargeback, revoke.
  * - `payment.expired`: the pending charge expired unpaid.
- * - `subscription.renewed`: extend access until `subscription.currentPeriodEnd`.
- * - `subscription.ended`: canceled/expired, do not renew anymore.
+ * - `subscription.renewed`: same as `payment.paid`, access now runs until the
+ *   new `payment.accessUntil`.
+ * - `subscription.ended`: the gateway will not charge again; access still
+ *   runs until `payment.accessUntil`.
+ *
+ * `subscription` is sent for every paid plan that has a period (recurring or
+ * one-off prepaid) and is null only for lifetime plans and never-paid
+ * charges. `subscription.currentPeriodEnd` equals `payment.accessUntil`.
  */
 export interface PaymentEvent {
   id: string
@@ -222,6 +235,7 @@ export function parsePaymentRecord(wire: unknown): PaymentRecord {
       : null,
     checkoutUrl: strOrNull(o, 'checkout_url', p),
     tracking: stringMap(o.tracking, p + 'tracking'),
+    accessUntil: strOrNull(o, 'access_until', p),
     createdAt: str(o, 'created_at', p),
     paidAt: strOrNull(o, 'paid_at', p),
     refundedAt: strOrNull(o, 'refunded_at', p),
