@@ -2,6 +2,7 @@ import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
 import { cloudflareIp, nodeSocketIp, vercelIp } from '../src/ip.ts'
 import type { BridgeHandlers } from '../src/types.ts'
+import { BRIDGE_VERSION } from '../src/version.ts'
 import {
   ACTOR,
   NOW,
@@ -209,7 +210,7 @@ describe('signed round trip (Central signRequest → bridge)', () => {
     )
     assert.equal(res?.status, 200)
     assert.deepEqual(res?.body, {
-      version: '1.0.0',
+      version: BRIDGE_VERSION,
       product: 'demo',
       capabilities: ['users_search'],
     })

@@ -11,7 +11,7 @@ Same contract, vectors and handlers as `@central/bridge-adonis` and
 in the Central repository.
 
 ```bash
-npm install github:kellvembarbosa/central-bridge-web#v1.0.0
+npm install github:kellvembarbosa/central-bridge-web#v1.1.0
 ```
 
 (Source of truth: `packages/central-bridge-web` in the Central repository;
@@ -89,7 +89,7 @@ const response = await bridge(request)
 Handlers have the same names and signatures as `@central/bridge-adonis`:
 `paymentOwner`, `subscriptions`, `searchUsers`, `findUser`, `changePlan`,
 `sendPasswordReset`, `suspend` + `unsuspend`, `metrics`, `invoiceRequest` +
-`receiveInvoice`. Throw `UserNotFoundError` / `BridgeError` for contract
+`receiveInvoice`, `paymentEvent` (checkout, below). Throw `UserNotFoundError` / `BridgeError` for contract
 errors.
 
 ### Client IP resolvers
@@ -150,6 +150,61 @@ const pdf = await central.invoicePdf(id) // Uint8Array
 ```
 
 Errors are `CentralApiError` (`code`, `status`; status 0 for transport errors).
+
+## Checkout by the Central (contract §10)
+
+The Central owns checkout and payments: plans, prices and gateway keys live
+there (panel → product → **Checkout e planos**). The product holds **no
+gateway key**; it only picks a plan slug and reacts to the Central's signed
+notifications.
+
+```ts
+// 1. Pricing page: plans on sale, already ordered.
+const plans = await central.listPlans()
+// [{ slug, name, description, interval: 'day'|'week'|'month'|'year'|'lifetime',
+//    intervalCount, recurring, amountCents, originalAmountCents, currency, badge,
+//    features, sortOrder }]
+
+// 2. Checkout: the Central creates the charge (Pix on Woovi, card/boleto on Asaas…).
+const payment = await central.createPayment(
+  {
+    plan: 'vitalicio',
+    customer: { name, email, document }, // document optional (some gateways need it)
+    productUserRef: String(user.id),
+    method: 'pix', // or 'card' | 'boleto' | null (gateway default / hosted page)
+    tracking: { utm_source },
+  },
+  `checkout:${user.id}:${attemptId}` // idempotency key: new key per attempt
+)
+// payment.pix?.copyPaste / payment.pix?.qrCodeImageUrl / payment.checkoutUrl
+
+// 3. Return/polling page: pending payments are re-checked at the gateway.
+const current = await central.getPayment(payment.id) // status: pending|paid|expired|refunded|failed
+```
+
+Then implement the `paymentEvent` handler — the Central calls
+`POST {basePath}/payment-events` (signed, retried until you answer 2xx):
+
+```ts
+paymentEvent: async (event) => {
+  switch (event.type) {
+    case 'payment.paid': // grant event.payment.plan to event.payment.productUserRef
+      return grantOnce(event.payment.id, event.payment)
+    case 'payment.refunded': // full refund or chargeback
+      return revoke(event.payment.id)
+    case 'subscription.renewed': // extend until event.subscription.currentPeriodEnd
+      return extend(event.payment.id, event.subscription!.currentPeriodEnd)
+    case 'subscription.ended':
+    case 'payment.expired':
+      return markEnded(event.payment.id, event.type)
+  }
+}
+```
+
+Handle it **idempotently by `event.id`** and grant at most once per
+`payment.id`: the same notification may arrive more than once, and the
+product may also see `status: 'paid'` from `getPayment` first. Throwing
+makes the Central retry later. Writes need the shared `idempotencyStore`.
 
 ## Development
 

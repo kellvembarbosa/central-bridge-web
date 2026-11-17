@@ -1,7 +1,7 @@
 {
   "name": "@central/bridge-web",
-  "version": "1.0.0",
-  "description": "Central Bridge (contract v1) on Web standards: signed admin API (HMAC) and invoicing client for Cloudflare Workers, Vercel, Astro, Next.js, TanStack Start and SvelteKit.",
+  "version": "1.1.0",
+  "description": "Central Bridge (contract v1) on Web standards: signed admin API (HMAC), invoicing and checkout client for Cloudflare Workers, Vercel, Astro, Next.js, TanStack Start and SvelteKit.",
   "type": "module",
   "license": "MIT",
   "main": "./build/index.js",

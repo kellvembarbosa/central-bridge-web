@@ -1,0 +1,333 @@
+{
+  "description": "Central checkout shapes (contract §10). Packages must parse *_wire into *_parsed exactly (snake_case wire → camelCase).",
+  "plan_wire": {
+    "slug": "30-dias",
+    "name": "30 dias",
+    "description": null,
+    "interval": "day",
+    "interval_count": 30,
+    "recurring": false,
+    "amount_cents": 1090,
+    "original_amount_cents": 1990,
+    "currency": "BRL",
+    "badge": "Liberação imediata",
+    "features": [
+      "Simulado ilimitado"
+    ],
+    "sort_order": 1
+  },
+  "plan_parsed": {
+    "slug": "30-dias",
+    "name": "30 dias",
+    "description": null,
+    "interval": "day",
+    "intervalCount": 30,
+    "recurring": false,
+    "amountCents": 1090,
+    "originalAmountCents": 1990,
+    "currency": "BRL",
+    "badge": "Liberação imediata",
+    "features": [
+      "Simulado ilimitado"
+    ],
+    "sortOrder": 1
+  },
+  "payment_wire": {
+    "id": "7f6d3c1e-4b2a-4c8e-9f10-2a3b4c5d6e7f",
+    "status": "pending",
+    "plan": {
+      "slug": "vitalicio",
+      "name": "Acesso Vitalício",
+      "interval": "lifetime",
+      "interval_count": 1,
+      "recurring": false
+    },
+    "amount_cents": 2990,
+    "refunded_cents": 0,
+    "currency": "BRL",
+    "method": "pix",
+    "product_user_ref": "42",
+    "customer": {
+      "name": "Ana Souza",
+      "email": "ana@cliente.test"
+    },
+    "pix": {
+      "copy_paste": "00020101021226...6304ABCD",
+      "qr_code_image_url": "https://api.woovi.com/openpix/charge/brcode/image/x.png",
+      "expires_at": "2026-11-18T12:00:00.000+00:00"
+    },
+    "checkout_url": "https://woovi.com/pay/x",
+    "tracking": {
+      "utm_source": "google"
+    },
+    "created_at": "2026-11-17T12:00:00.000+00:00",
+    "paid_at": null,
+    "refunded_at": null,
+    "expires_at": "2026-11-18T12:00:00.000+00:00"
+  },
+  "payment_parsed": {
+    "id": "7f6d3c1e-4b2a-4c8e-9f10-2a3b4c5d6e7f",
+    "status": "pending",
+    "plan": {
+      "slug": "vitalicio",
+      "name": "Acesso Vitalício",
+      "interval": "lifetime",
+      "intervalCount": 1,
+      "recurring": false
+    },
+    "amountCents": 2990,
+    "refundedCents": 0,
+    "currency": "BRL",
+    "method": "pix",
+    "productUserRef": "42",
+    "customer": {
+      "name": "Ana Souza",
+      "email": "ana@cliente.test"
+    },
+    "pix": {
+      "copyPaste": "00020101021226...6304ABCD",
+      "qrCodeImageUrl": "https://api.woovi.com/openpix/charge/brcode/image/x.png",
+      "expiresAt": "2026-11-18T12:00:00.000+00:00"
+    },
+    "checkoutUrl": "https://woovi.com/pay/x",
+    "tracking": {
+      "utm_source": "google"
+    },
+    "createdAt": "2026-11-17T12:00:00.000+00:00",
+    "paidAt": null,
+    "refundedAt": null,
+    "expiresAt": "2026-11-18T12:00:00.000+00:00"
+  },
+  "event_wire": {
+    "id": "evt_0123456789abcdef0123456789abcdef",
+    "type": "payment.paid",
+    "occurred_at": "2026-11-17T12:01:05.000+00:00",
+    "payment": {
+      "id": "7f6d3c1e-4b2a-4c8e-9f10-2a3b4c5d6e7f",
+      "status": "paid",
+      "plan": {
+        "slug": "vitalicio",
+        "name": "Acesso Vitalício",
+        "interval": "lifetime",
+        "interval_count": 1,
+        "recurring": false
+      },
+      "amount_cents": 2990,
+      "refunded_cents": 0,
+      "currency": "BRL",
+      "method": "pix",
+      "product_user_ref": "42",
+      "customer": {
+        "name": "Ana Souza",
+        "email": "ana@cliente.test"
+      },
+      "pix": null,
+      "checkout_url": null,
+      "tracking": {
+        "utm_source": "google"
+      },
+      "created_at": "2026-11-17T12:00:00.000+00:00",
+      "paid_at": "2026-11-17T12:01:00.000+00:00",
+      "refunded_at": null,
+      "expires_at": "2026-11-18T12:00:00.000+00:00"
+    },
+    "subscription": null
+  },
+  "event_parsed": {
+    "id": "evt_0123456789abcdef0123456789abcdef",
+    "type": "payment.paid",
+    "occurredAt": "2026-11-17T12:01:05.000+00:00",
+    "payment": {
+      "id": "7f6d3c1e-4b2a-4c8e-9f10-2a3b4c5d6e7f",
+      "status": "paid",
+      "plan": {
+        "slug": "vitalicio",
+        "name": "Acesso Vitalício",
+        "interval": "lifetime",
+        "intervalCount": 1,
+        "recurring": false
+      },
+      "amountCents": 2990,
+      "refundedCents": 0,
+      "currency": "BRL",
+      "method": "pix",
+      "productUserRef": "42",
+      "customer": {
+        "name": "Ana Souza",
+        "email": "ana@cliente.test"
+      },
+      "pix": null,
+      "checkoutUrl": null,
+      "tracking": {
+        "utm_source": "google"
+      },
+      "createdAt": "2026-11-17T12:00:00.000+00:00",
+      "paidAt": "2026-11-17T12:01:00.000+00:00",
+      "refundedAt": null,
+      "expiresAt": "2026-11-18T12:00:00.000+00:00"
+    },
+    "subscription": null
+  },
+  "renewal_wire": {
+    "id": "evt_fedcba9876543210fedcba9876543210",
+    "type": "subscription.renewed",
+    "occurred_at": "2026-12-17T12:00:00.000+00:00",
+    "payment": {
+      "id": "7f6d3c1e-4b2a-4c8e-9f10-2a3b4c5d6e7f",
+      "status": "paid",
+      "plan": {
+        "slug": "mensal",
+        "name": "Mensal",
+        "interval": "month",
+        "interval_count": 1,
+        "recurring": true
+      },
+      "amount_cents": 2990,
+      "refunded_cents": 0,
+      "currency": "BRL",
+      "method": "pix",
+      "product_user_ref": "42",
+      "customer": {
+        "name": "Ana Souza",
+        "email": "ana@cliente.test"
+      },
+      "pix": null,
+      "checkout_url": null,
+      "tracking": {
+        "utm_source": "google"
+      },
+      "created_at": "2026-11-17T12:00:00.000+00:00",
+      "paid_at": "2026-11-17T12:01:00.000+00:00",
+      "refunded_at": null,
+      "expires_at": "2026-11-18T12:00:00.000+00:00"
+    },
+    "subscription": {
+      "status": "active",
+      "current_period_end": "2027-01-17T12:00:00.000+00:00"
+    }
+  },
+  "renewal_parsed": {
+    "id": "evt_fedcba9876543210fedcba9876543210",
+    "type": "subscription.renewed",
+    "occurredAt": "2026-12-17T12:00:00.000+00:00",
+    "payment": {
+      "id": "7f6d3c1e-4b2a-4c8e-9f10-2a3b4c5d6e7f",
+      "status": "paid",
+      "plan": {
+        "slug": "mensal",
+        "name": "Mensal",
+        "interval": "month",
+        "intervalCount": 1,
+        "recurring": true
+      },
+      "amountCents": 2990,
+      "refundedCents": 0,
+      "currency": "BRL",
+      "method": "pix",
+      "productUserRef": "42",
+      "customer": {
+        "name": "Ana Souza",
+        "email": "ana@cliente.test"
+      },
+      "pix": null,
+      "checkoutUrl": null,
+      "tracking": {
+        "utm_source": "google"
+      },
+      "createdAt": "2026-11-17T12:00:00.000+00:00",
+      "paidAt": "2026-11-17T12:01:00.000+00:00",
+      "refundedAt": null,
+      "expiresAt": "2026-11-18T12:00:00.000+00:00"
+    },
+    "subscription": {
+      "status": "active",
+      "currentPeriodEnd": "2027-01-17T12:00:00.000+00:00"
+    }
+  },
+  "invalid_events": [
+    {
+      "why": "unknown type",
+      "wire": {
+        "id": "evt_x",
+        "type": "payment.unknown",
+        "occurred_at": "2026-11-17T12:00:00Z",
+        "payment": {
+          "id": "7f6d3c1e-4b2a-4c8e-9f10-2a3b4c5d6e7f",
+          "status": "paid",
+          "plan": {
+            "slug": "vitalicio",
+            "name": "Acesso Vitalício",
+            "interval": "lifetime",
+            "interval_count": 1,
+            "recurring": false
+          },
+          "amount_cents": 2990,
+          "refunded_cents": 0,
+          "currency": "BRL",
+          "method": "pix",
+          "product_user_ref": "42",
+          "customer": {
+            "name": "Ana Souza",
+            "email": "ana@cliente.test"
+          },
+          "pix": null,
+          "checkout_url": null,
+          "tracking": {
+            "utm_source": "google"
+          },
+          "created_at": "2026-11-17T12:00:00.000+00:00",
+          "paid_at": "2026-11-17T12:01:00.000+00:00",
+          "refunded_at": null,
+          "expires_at": "2026-11-18T12:00:00.000+00:00"
+        },
+        "subscription": null
+      }
+    },
+    {
+      "why": "missing payment",
+      "wire": {
+        "id": "evt_x",
+        "type": "payment.paid",
+        "occurred_at": "2026-11-17T12:00:00Z",
+        "subscription": null
+      }
+    },
+    {
+      "why": "missing id",
+      "wire": {
+        "type": "payment.paid",
+        "occurred_at": "2026-11-17T12:00:00Z",
+        "payment": {
+          "id": "7f6d3c1e-4b2a-4c8e-9f10-2a3b4c5d6e7f",
+          "status": "paid",
+          "plan": {
+            "slug": "vitalicio",
+            "name": "Acesso Vitalício",
+            "interval": "lifetime",
+            "interval_count": 1,
+            "recurring": false
+          },
+          "amount_cents": 2990,
+          "refunded_cents": 0,
+          "currency": "BRL",
+          "method": "pix",
+          "product_user_ref": "42",
+          "customer": {
+            "name": "Ana Souza",
+            "email": "ana@cliente.test"
+          },
+          "pix": null,
+          "checkout_url": null,
+          "tracking": {
+            "utm_source": "google"
+          },
+          "created_at": "2026-11-17T12:00:00.000+00:00",
+          "paid_at": "2026-11-17T12:01:00.000+00:00",
+          "refunded_at": null,
+          "expires_at": "2026-11-18T12:00:00.000+00:00"
+        },
+        "subscription": null
+      }
+    }
+  ]
+}
